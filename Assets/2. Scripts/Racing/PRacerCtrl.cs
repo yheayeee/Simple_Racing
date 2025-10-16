@@ -1,18 +1,17 @@
+using System;
 using UnityEngine;
 
 public class PRacerCtrl : MonoBehaviour
 {
-    public float speed = 30f;
-    public float maxAngle = 40f;
-    public float turnspeed = 5f;
+    [Range(0f, 500f)] public float speed = 300f;
+    [Range(0f, 50f)] public float jumpForce = 5f;
     private Rigidbody RacerRig;
-    Vector3 MoveDir;
-    private float initYRot;
+    bool canJump;
 
     void Awake()
     {
         RacerRig = GetComponent<Rigidbody>();
-        float initYRot = transform.localEulerAngles.y;
+        canJump = true;
     }
 
     void FixedUpdate()
@@ -20,14 +19,37 @@ public class PRacerCtrl : MonoBehaviour
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
-        Move(h, v);
-        Debug.DrawRay(transform.position, MoveDir * 5f, Color.red);
+        Vector3 LocalDirection = new Vector3(h, 0f, v).normalized;
+        Vector3 WorldDIrection = transform.TransformDirection(LocalDirection);
+
+        Move(WorldDIrection);
+        if (canJump)
+        {
+            Jump();
+        }
     }
 
-    void Move(float h, float v)
+    void Move(Vector3 V)
     {
-        MoveDir = transform.forward;
-        RacerRig.MovePosition(transform.position + MoveDir * v * speed * Time.deltaTime);
-        transform.Rotate(0, h * speed * Time.deltaTime, 0, Space.Self);
+        RacerRig.AddForce(V * speed);
+    }
+
+    void Jump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            canJump = false;
+            RacerRig.linearVelocity = new Vector3(0, 0, 0);
+            RacerRig.angularVelocity = new Vector3(0, 0, 0);
+            RacerRig.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+    }
+
+    void OnCollisionEnter(Collision collision) 
+    {
+        if (collision.gameObject.tag == "Floor")
+        {
+            canJump = true;
+        }
     }
 }
