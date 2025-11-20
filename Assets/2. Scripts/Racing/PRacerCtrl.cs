@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class PRacerCtrl : MonoBehaviour
 {
-    [Range(0f, 500f)] public float speed = 300f;
+    [Range(0f, 500f)] public float rollForce = 300f;
     [Range(0f, 50f)] public float jumpForce = 5f;
     private Rigidbody RacerRig;
+    public GameObject Teleportor;
     bool canJump;
 
     void Awake()
@@ -19,19 +20,13 @@ public class PRacerCtrl : MonoBehaviour
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
-        Vector3 LocalDirection = new Vector3(h, 0f, v).normalized;
-        Vector3 WorldDIrection = transform.TransformDirection(LocalDirection);
+        Vector3 movement = new Vector3(h, 0, v);
+        RacerRig.AddForce(movement*rollForce);
 
-        Move(WorldDIrection);
         if (canJump)
         {
             Jump();
         }
-    }
-
-    void Move(Vector3 V)
-    {
-        RacerRig.AddForce(V * speed);
     }
 
     void Jump()
@@ -39,8 +34,8 @@ public class PRacerCtrl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             canJump = false;
-            RacerRig.linearVelocity = new Vector3(0, 0, 0);
-            RacerRig.angularVelocity = new Vector3(0, 0, 0);
+            // RacerRig.linearVelocity = new Vector3(0, 0, 0);
+            // RacerRig.angularVelocity = new Vector3(0, 0, 0);
             RacerRig.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }

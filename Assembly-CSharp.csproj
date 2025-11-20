@@ -50,7 +50,9 @@
   <ItemGroup>
     <Compile Include="Assets\2. Scripts\Global\CamFollow.cs" />
     <Compile Include="Assets\2. Scripts\Racing\PRacerCtrl.cs" />
+    <Compile Include="Assets\2. Scripts\Global\Timer.cs" />
     <Compile Include="Assets\2. Scripts\Global\CamRectCtrl.cs" />
+    <Compile Include="Assets\2. Scripts\Racing\MovingWall.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
