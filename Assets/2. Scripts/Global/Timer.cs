@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI; // Legacy Text를 사용하기 위해 이 네임스페이스로 변경했다.
 
@@ -12,6 +13,15 @@ public class Timer : MonoBehaviour
     
     // 3. 타이머 작동 상태를 제어할 변수 (선택 사항)
     private bool isRunning = true; 
+
+    public static Action EndGame;
+    public static Action RestartGame;
+
+    void Awake()
+    {
+        EndGame+=StopTimer;
+        EndGame+=ifEnd;
+    }
 
     // 매 프레임마다 호출되는 Update 함수에서 시간을 갱신한다.
     void Update()
@@ -50,5 +60,24 @@ public class Timer : MonoBehaviour
     public void StartTimer()
     {
         isRunning = true;
+    }
+
+    public void ResetTimer()
+    {
+        // 1. currentTime 변수를 0으로 초기화합니다.
+        currentTime = 0f;
+        
+        // 2. 초기화와 동시에 타이머 표시를 즉시 00:00으로 업데이트합니다.
+        UpdateTimerDisplay(currentTime);
+        
+        Debug.Log("타이머가 00:00으로 초기화되었습니다.");
+    }
+
+    public void ifEnd()
+    {
+        float minutes = Mathf.FloorToInt(currentTime / 60);
+        float seconds = Mathf.FloorToInt(currentTime % 60);
+        //Debug.Log(string.Format("{0:00}:{1:00}", minutes, seconds));
+        
     }
 }

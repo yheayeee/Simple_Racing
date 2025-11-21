@@ -53,6 +53,7 @@
     <Compile Include="Assets\2. Scripts\Global\Timer.cs" />
     <Compile Include="Assets\2. Scripts\Global\CamRectCtrl.cs" />
     <Compile Include="Assets\2. Scripts\Racing\MovingWall.cs" />
+    <Compile Include="Assets\2. Scripts\Racing\MovingCylinder.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
