@@ -9,6 +9,7 @@ public class PRacerCtrl : MonoBehaviour
     private Rigidbody RacerRig;
     private Transform RacerTr;
     bool canJump;
+    bool IsPause = false;
     Vector3 Teleportor = new Vector3(0f,0.5f,-45f);
 
     void Awake()
@@ -43,6 +44,12 @@ public class PRacerCtrl : MonoBehaviour
         {
             Fall();
         }
+
+        if (IsPause == true)
+        {
+            Time.timeScale = 0;
+            IsPause=false;
+        }
     }
 
     void Jump()
@@ -72,8 +79,11 @@ public class PRacerCtrl : MonoBehaviour
         }
         if (collision.gameObject.tag == "EndLine")
         {
+            RacerRig.linearVelocity = new Vector3(0, 0, 0);
+            RacerRig.angularVelocity = new Vector3(0, 0, 0);
             transform.position=Teleportor;        
             Timer.EndGame();
+            IsPause = true;
         }
     }
 }
