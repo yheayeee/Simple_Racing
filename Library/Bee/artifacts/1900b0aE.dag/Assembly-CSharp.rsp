@@ -404,9 +404,12 @@
 -analyzer:"C:/Program Files/Unity/Hub/Editor/6000.0.57f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll"
 "Assets/2. Scripts/Global/CamFollow.cs"
 "Assets/2. Scripts/Global/CamRectCtrl.cs"
+"Assets/2. Scripts/Global/MainButtonCtrl.cs"
+"Assets/2. Scripts/Global/SaveManager.cs"
 "Assets/2. Scripts/Global/Timer.cs"
 "Assets/2. Scripts/Racing/MovingCylinder.cs"
 "Assets/2. Scripts/Racing/MovingWall.cs"
+"Assets/2. Scripts/Racing/MovingWallReverse.cs"
 "Assets/2. Scripts/Racing/PRacerCtrl.cs"
 -langversion:9.0
 /deterministic

@@ -4,12 +4,12 @@ using UnityEngine.UI; // Legacy Text를 사용하기 위해 이 네임스페이�
 
 public class Timer : MonoBehaviour
 {
+
     // 1. Inspector에서 UI Text 요소를 연결하기 위한 변수
     // Legacy Text 타입인 'Text'로 변경했다.
     public Text timerText; 
-    public Text FirScore;
-    public Text SecScore;
-    public Text ThrScore;
+    public Text HighS;
+    public Text NowS;
     public GameObject ResultUI;
 
     // 2. 현재 시간을 저장할 변수
@@ -25,6 +25,7 @@ public class Timer : MonoBehaviour
     {
         EndGame+=StopTimer;
         EndGame+=ifEnd;
+        ResetTimer();
         StartTimer();
     }
 
@@ -51,7 +52,7 @@ public class Timer : MonoBehaviour
 
         float minutes = Mathf.FloorToInt(timeToDisplay / 60);
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
-
+        
         // string.Format을 사용하여 "00:00" 형태로 포맷하고 Text 컴포넌트에 할당했다.
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
@@ -80,9 +81,27 @@ public class Timer : MonoBehaviour
 
     public void ifEnd()
     {
-        float minutes = Mathf.FloorToInt(currentTime / 60);
-        float seconds = Mathf.FloorToInt(currentTime % 60);
-        //Debug.Log(string.Format("{0:00}:{1:00}", minutes, seconds));
         ResultUI.SetActive(true);
+        SaveManager.instance.nowTime.NowScore = currentTime;
+
+        if (SaveManager.instance.nowTime.HighScore > currentTime){
+            SaveManager.instance.nowTime.HighScore = currentTime;
+        }
+
+        float Hminutes = Mathf.FloorToInt(SaveManager.instance.nowTime.HighScore / 60);
+        float Hseconds = Mathf.FloorToInt(SaveManager.instance.nowTime.HighScore % 60);
+
+        HighS.text = string.Format("{0:00}:{1:00}", Hminutes, Hseconds);
+
+        float Nminutes = Mathf.FloorToInt(SaveManager.instance.nowTime.NowScore / 60);
+        float Nseconds = Mathf.FloorToInt(SaveManager.instance.nowTime.NowScore % 60);
+
+        NowS.text = string.Format("{0:00}:{1:00}", Nminutes, Nseconds);
+        Save();
+    }
+    
+    public void Save()
+    {
+        SaveManager.instance.SaveData();
     }
 }
